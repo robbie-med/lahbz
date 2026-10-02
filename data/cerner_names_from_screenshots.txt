@@ -192,3 +192,20 @@ MySwab Vaginosis Profile + Trichomonas
 Candida and Trichomonas Vaginitis Swab
 HPV, Self-Collect, Vaginal Swab
 Ferritin Level (FERRITIN)
+.Thyroglobulin by LCMS 070121
+.Arsenic Toxic Species Ur 007086
+.PSEUDOEPHEDRINE CONFIRMATION 764632
+.BARBITURATES,MS,WB/SP RFX 700813
+.THC,MS,WB/SP RFX 700817
+.Fungus Cult 080092
+.Fungus Stain 080086
+.GC Cult 080019
+.Gram Stain 080031
+.Legionella Cult 080271
+.WBC Stool 080025
+.Body Fluid Cult 080186
+.MIC 1 Drug 080647
+.O and P 080013
+80047 Chem 8 POC
+80061 Lipid Panel POC
+80305 Urine Drug Screen POC

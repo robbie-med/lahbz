@@ -2,14 +2,16 @@
 
 Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labcorp Oklahoma test catalog (rml.labcatalog.net, saved 2026-10-02) and Labcorp's national test menu (labcorp.com/tests).
 
-- **Old RML / Labcorp Oklahoma name**: what Cerner's "Reference Information" link opens. The order code (e.g. `TSH REC AB`) is often what Cerner displays.
+- **Old RML / Labcorp Oklahoma name**: what Cerner's "Reference Information" link opens. The short code in backticks (e.g. `TSH REC AB`) is sometimes the exact Cerner display name. Cerner only matches text in the display name, so search with words, not test numbers.
 - **Labcorp national name (code)**: the test Labcorp actually runs, for tests sent to Labcorp national. A 6-digit code in the Cerner name (e.g. ".Immunofixation Reflex, Serum 001496") is one of these.
+- **Names ending in "POC" with a 5-digit number** (e.g. "80061 Lipid Panel POC") are point-of-care (bedside) tests, not Labcorp orders; the number is the billing code.
+- **Names starting with "." are reflex add-ons.** Labcorp adds them automatically when the parent test calls for it. Don't order them; order the parent listed in that row. That's also why these are the only Cerner names with numbers in them.
 - **⚠** = my best guess from the abbreviation. Confirm before relying on it.
 - "RML catalog marks discontinued" means RML retired it before the switch. An RML test still listed as active may still not be orderable now (e.g. Thyroid Analyzer).
 
 **Thyroid Analyzer** (RML `THYROID AN`, #4502350, TSH reflexing to free T4/free T3) is an RML-only build and no longer orderable. Closest Labcorp national test: **Thyroid Cascade Profile (330015)**, TSH reflexing to free T4, free T3 and/or TPO antibodies. Other options: TSH and Free T4 (224576); TSH alone (004259).
 
-## Cerner names that differ from the catalog (132)
+## Cerner names that differ from the catalog (149)
 
 | Cerner name | Old RML / Labcorp Oklahoma name | Labcorp national name (code) | Notes |
 |---|---|---|---|
@@ -43,7 +45,7 @@ Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labc
 | Salicylate-Serum Level | Salicylate Quantitative (Serum/Plasma) — order code `SALICYLATE`, #4004550 | — |  |
 | Thiocyante Serum Level | Thiocyanate, Serum/Plasma — order code `Thiocyante`, #5613595 | Thiocyanate, Serum or Plasma (811331) |  |
 | Zinc Serum | Zinc, Serum or Plasma — order code `ZINC`, #3603800 | Zinc, Serum or Plasma (001800) |  |
-| .Immunofixation Reflex, Serum 001496 | — | 001496 (not on Labcorp's public menu) | Labcorp national code 001496 (not on Labcorp public menu). |
+| .Immunofixation Reflex, Serum 001496 | — | Protein Electrophoresis With Interpretation, Serum With Reflex to IFE, Serum (123026) | REFLEX ADD-ON, do not order. Labcorp adds it from the parent listed (serum protein electrophoresis with reflex to IFE). |
 | Alkaline Phosphatase, Serum | Alkaline Phosphatase — order code `ALK PHOS`, #2000250 | — |  |
 | Bordetella Pertussis Serum Antibody | Bordetella pertussis Antibodies, IgG — order code `B pertussis IgG Ab`, #6908547<br>Bordetella pertussis Antibodies, IgA and IgG with Reflex to Immunoblot — order code `BOR PR AB`, #5521005 | Bordetella pertussis Antibodies, IgG (161745)<br>326938 (not on Labcorp's public menu) | ⚠ Two RML versions: IgG only, or IgA+IgG w/ reflex. |
 | C3 Complement Serum | Complement C3, Serum — order code `C3`, #5000300 | — |  |
@@ -58,26 +60,26 @@ Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labc
 | IgA Subclasses Serum | Immunoglobulin IgA Subclasses, Serum — order code `IGAS`, #6907825 | Immunoglobulin A, Subclasses (1-2) (123049) |  |
 | Mycophenolic Level Serum | Mycophenolic Acid — order code `MYCOPHEN A`, #3630000 | Mycophenolic Acid (MPA) and Metabolite (716795) |  |
 | Pregabalin (Lyrica) Serum | Pregabalin (Lyrica) Serum or Plasma — order code `Pregabalin S/P`, #6906325 | Pregabalin, Serum or Plasma (808320) |  |
-| .Cryptococcus Ag Titer, Serum 183036 | Cryptococcus Antigen Titer — order code `TITR CRYPT`, #6002300 | 183036 (not on Labcorp's public menu) — closest national equivalent; RML ran this in-house | Labcorp national code 183036 (not on public menu). RML equivalent was Cryptococcus Antigen Titer. |
-| .DPPX Antibody, Titer, Serum 505282 | — | 505282 (not on Labcorp's public menu) | Labcorp national code only. |
+| .Cryptococcus Ag Titer, Serum 183036 | — | Cryptococcus Antigen (183025) | REFLEX ADD-ON, do not order. Order Cryptococcus Antigen; the titer is added if positive. |
+| .DPPX Antibody, Titer, Serum 505282 | — | Stiff-Person Disorders Profile, Serum (164126)<br>Autoimmune Dysautonomia Profile (505413)<br>Autoimmune Epilepsy Evaluation Profile (505490) | REFLEX ADD-ON, do not order. Part of the neuro antibody profiles listed. |
 | 1,5 Anhydroglucitol Quant, Serum/Plasma | 1,5 Anhydroglucitol Quantitative, Serum or Plasma — order code `Anhydroglucitol`, #2907676 | GlycoMark® (500115) |  |
 | Beta 2 Microglobulin Serum | Beta-2-Microglobulin, Serum — order code `BETA2 M S`, #2005800 | — |  |
 | Beta HCG Qual Serum Preg Test | Beta-hCG (Human Chorionic Gonadotropin) Pregnancy Test, Qualitative, Serum — order code `HCG PREG`, #3601450 | Human Chorionic Gonadotropin (hCG), β-Subunit, Qualitative (004556) — closest national equivalent; RML ran this in-house |  |
 | Enterovirus DNA PCR Serum | Enterovirus DNA PCR — order code `CSF ENTPCR`, #5586525 | Enterovirus, Real-time PCR (138636) | ⚠ RML catalog lists this test under CSF; check specimen. |
 | Luteinizing Hormone (LH) Serum | Luteinizing Hormone (LH), Serum — order code `LH`, #3601750 | — |  |
-| .Anti-LGI1 Antibody Titer,Serum 505357 | — | 505357 (not on Labcorp's public menu) | Labcorp national code only. |
-| .Anti-MOG Antibody Titer, Serum 505312 | — | 505312 (not on Labcorp's public menu) | Labcorp national code only. |
-| .hCG,Beta Subunit,Qnt,Serum 004613 | hCG Beta Subunit, Quantitative (Serial Monitor) — order code `HCG Beta Sub Qt`, #5196957 | 004613 (not on Labcorp's public menu) — closest national equivalent; RML ran this in-house<br>Human Chorionic Gonadotropin (hCG), β-Subunit, Quantitative (Serial Monitor) (480038) | ⚠ Labcorp national code 004613 (not on public menu). |
+| .Anti-LGI1 Antibody Titer,Serum 505357 | — | Anti-Leucine-Rich, Glioma-Inactivated Protein 1 (LGI1), Serum (505355) | REFLEX ADD-ON, do not order. Order Anti-LGI1, Serum. |
+| .Anti-MOG Antibody Titer, Serum 505312 | — | Anti-Myelin Oligodendrocyte Glycoprotein (MOG), Serum (505310) | REFLEX ADD-ON, do not order. Order Anti-MOG, Serum. |
+| .hCG,Beta Subunit,Qnt,Serum 004613 | — | — | ⚠ Leading "." usually means a reflex add-on; parent not found on Labcorp public menu. Do not order directly; ask lab. |
 | Fatty Acid Profile Essential Serum | Fatty Acid Profile, Essential, Serum — order code `FAPEP`, #6907817 | Essential Fatty Acid Profile, C12-C22 (070325) |  |
 | Oligoclonal Bands CSF and Serum | Oligoclonal Bands IgG — order code `OLIGO CSF`, #0804040 | Oligoclonal Banding, Serum and Cerebrospinal Fluid (019216) |  |
-| .Reflex Anti-LGI1 Ab Titer,Serum | — | — | ⚠ Reflex component of the LGI1 titer; not ordered by itself. |
+| .Reflex Anti-LGI1 Ab Titer,Serum | — | Anti-Leucine-Rich, Glioma-Inactivated Protein 1 (LGI1), Serum (505355) | REFLEX ADD-ON, do not order. Order Anti-LGI1, Serum. |
 | HSV 1/2 PCR Qualitative Plasma/Serum | Herpes Simplex Virus 1 and 2 (HSV) Plasma, Serum - PCR — order code `HSV PCR QL`, #5586635 | — |  |
 | Anti-Leucine-Rich, Glioma-Inactivated Protein 1 (LGI1), Serum | Anti-Leucine-Rich, Glioma-Inactivated Protein 1 (LGI1), Seru — order code `Anti-LGI1`, #5194491 | Anti-Leucine-Rich, Glioma-Inactivated Protein 1 (LGI1), Serum (505355) |  |
-| .APCA+IF Ab 010423 | Anti-Parietal Cell Antibody (APCA) Titer — order code `TITR PAR`, #5666675<br>Intrinsic Factor Blocking Antibody — order code `INT BL AB`, #5590600 | Antiparietal Cell Antibody (APCA) (006486) — closest national equivalent; RML ran this in-house<br>Intrinsic Factor Blocking Antibodies (010413) | ⚠ Labcorp national code 010423 (not on public menu). Looks like parietal cell Ab + intrinsic factor Ab combined. |
+| .APCA+IF Ab 010423 | — | Vitamin B12 Deficiency Cascade (141503) | REFLEX ADD-ON, do not order. Comes from the Vitamin B12 Deficiency Cascade. |
 | CARDIO AB | Cardiolipin Antibodies, IgM and IgG — order code `CARDIO G/M`, #5564450 | Anticardiolipin Antibodies (ACA), IgG, IgM, Quantitative (161802) — closest national equivalent; RML ran this in-house | ⚠ Cardiolipin; IgG+IgM is the likely build. |
 | Centrom AB | Centromere B Antibody — order code `CENT B AB`, #5508597 | Anticentromere B Antibodies (164814) — closest national equivalent; RML ran this in-house |  |
 | Citruln AB | Cyclic Citrullinated Peptide IgG Antibody (CCP Ab) — order code `CCP AB`, #5570175 | — | ⚠ Likely CCP (citrullinated peptide) antibody. |
-| Coccidioides Ab | Coccidioides Ab Reflexive Panel — order code `Coccid Ab Rflx Pnl`, #6907491 | Coccidioides immitis Antibodies, IgG and IgM, EIA (164798) — closest national equivalent; RML ran this in-house<br>830945 (not on Labcorp's public menu) | ⚠  |
+| Coccidioides Ab | Coccidioides Ab Reflexive Panel — order code `Coccid Ab Rflx Pnl`, #6907491 | Coccidioides immitis Antibodies, IgG and IgM, EIA (164798)<br>830945 (not on Labcorp's public menu) | ⚠  |
 | Cysticercosis Ab IgG CSF | Cysticercosis Antibody, IgG by ELISA (CSF) — order code `Cysticercos CSF`, #6906665 | 832400 (not on Labcorp's public menu) |  |
 | Cytoker AB | — | — | ⚠ Not found (cytokeratin?). Ask lab. |
 | EBV Ab Panel | — | Epstein-Barr Virus (EBV) Antibody Profile (240610) | ⚠ No RML panel; Labcorp national "EBV Antibody Profile" 240610. |
@@ -106,7 +108,7 @@ Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labc
 | ABG | Blood Gases Arterial — order code `BL GAS ART`, #2000500 | — | ⚠ Arterial blood gas; hospital/ED only. |
 | ABG w/Base Excess | Blood Gases Arterial — order code `BL GAS ART`, #2000500 | — | ⚠ Arterial blood gas; hospital/ED only. |
 | Absolute Eosinophil Count | Eosinophil Count, Absolute — order code `EOS CT ABS`, #0100050 | — |  |
-| .Coccidioides immitis Ab, by ID 830946 | — | 830946 (not on Labcorp's public menu) | Labcorp national code only. |
+| .Coccidioides immitis Ab, by ID 830946 | Coccidioides Ab Reflexive Panel — order code `Coccid Ab Rflx Pnl`, #6907491 | 830945 (not on Labcorp's public menu) | ⚠ Probably a reflex add-on of the Coccidioides Ab Reflexive Panel (830945). Do not order directly. |
 | Blastomyces dermatitidis Ab w/ Reflex | Blastomyces Antibodies w/Reflex to DID — order code `Blasto Ab`, #5501505 | Blastomyces dermatitidis Antibodies by EIA with Reflex to Immunodiffusion, Serum (165052) |  |
 | BOR PER AB | Bordetella pertussis Antibodies, IgA and IgG with Reflex to Immunoblot — order code `BOR PR AB`, #5521005 | 326938 (not on Labcorp's public menu) | ⚠ Likely the IgA+IgG w/ reflex version. |
 | Doublestranded DNA AB | DNA Double-Stranded Antibody (anti-ds DNA) — order code `DNA AB`, #5572000 | — |  |
@@ -126,7 +128,7 @@ Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labc
 | Thyroid Stimulating Ab | Thyroid Stimulating Immunoglobulin (TSI) — order code `THY ST IG`, #3603200<br>Thyroid Stimulating Hormone Receptor Antibody (TRAb) — order code `TSH REC AB`, #4502225 | Thyroid-stimulating Immunoglobulin (TSI) (140749)<br>Thyrotropin Receptor Antibody, Serum (010314) | ⚠ Ambiguous: could be TSI (stimulating immunoglobulin) or TRAb (TSH receptor Ab). Different tests. |
 | Toxocara IgG Ab | Toxocara Antibody IgG — order code `TOXOCA TOT`, #5510025 | 833596 (not on Labcorp's public menu) |  |
 | West Nile Ab | West Nile Virus Antibodies (IgG, IgM), Serum — order code `WEST NILE`, #3609525 | West Nile Virus (WNV) Antibody, IgG and IgM (138842) |  |
-| .Blastomyces Abs, Qn, DID | — | Blastomyces Antibodies, Quantitative, DID (164293) |  |
+| .Blastomyces Abs, Qn, DID | Blastomyces Antibodies w/Reflex to DID — order code `Blasto Ab`, #5501505 | Blastomyces Antibodies, Quantitative, DID (164293)<br>Blastomyces dermatitidis Antibodies by EIA with Reflex to Immunodiffusion, Serum (165052) | ⚠ Probably the reflex step of "Blastomyces dermatitidis Ab w/ Reflex". Order that instead. |
 | ACHR ABS | Acetylcholine Receptor Binding Antibody — order code `ACETY BND`, #5500010 | Acetylcholine Receptor (AChR)-binding Antibodies (085902) | ⚠ Likely AChR binding antibody (blocking and modulating are separate tests). |
 | NuSwab VG Plus+Mycopl+Genita | NuSwab VG Plus+Mycopl+Genital — order code `NS VG+Myco Gen`, #5195364 | 385897 (not on Labcorp's public menu) | Includes a genital culture: needs orange Aptima swab AND an eSwab. |
 | 5-Nucleotidase | 5'Nucleotidase — order code `5'NUCLEOT`, #2007150 | 5′ Nucleotidase (001701) |  |
@@ -145,6 +147,23 @@ Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labc
 | MySwab Vaginosis Profile + Trichomonas | MySwab Vaginosis Profile + Trichomonas - Swab - TMA — order code `MySwab Vag TV`, #6987004 | — |  |
 | HPV, Self-Collect, Vaginal Swab | Self-Collect, HPV, Vaginal Swab — order code `Self Col HPV`, #5195627 | Self-Collection in Office or Patient Service Center, High Risk Human Papillomavirus (HPV) With Genotyping, Vaginal Swab (507401) |  |
 | Ferritin Level (FERRITIN) | Ferritin — order code `FERRITIN`, #4500800 | — |  |
+| .Thyroglobulin by LCMS 070121 | — | Thyroglobulin Antibody and Thyroglobulin, IMA or LC/MS-MS (042045) | REFLEX ADD-ON, do not order. Order Thyroglobulin Antibody and Thyroglobulin (042045). |
+| .Arsenic Toxic Species Ur 007086 | — | Arsenic Exposure Profile, Urine (007045)<br>Heavy Metals Profile II, Urine (250281) | REFLEX ADD-ON, do not order. Part of the urine arsenic / heavy metals profiles listed. |
+| .PSEUDOEPHEDRINE CONFIRMATION 764632 | — | — | ⚠ Leading "." usually means a reflex add-on (drug confirmation). Parent not found on Labcorp public menu. |
+| .BARBITURATES,MS,WB/SP RFX 700813 | — | Drug Screen 13 with reflex Confirmation (AMP,BAR,BZO,COC,PCP,THC,OPI,OXY,MD,FEN,MEP,PPX,TRAM), Serum (700845) | REFLEX ADD-ON, do not order. Confirmation step of the serum drug screen listed. All ".<DRUG>,MS,WB/SP RFX 7008xx" entries work the same way. |
+| .THC,MS,WB/SP RFX 700817 | — | Drug Screen 13 with reflex Confirmation (AMP,BAR,BZO,COC,PCP,THC,OPI,OXY,MD,FEN,MEP,PPX,TRAM), Serum (700845) | REFLEX ADD-ON, do not order. Confirmation step of the serum drug screen listed. |
+| .Fungus Cult 080092 | — | Fungus Culture With Stain (188243)<br>Fungus (Mycology) Culture (008482) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .Fungus Stain 080086 | — | Fungus Stain (008136) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .GC Cult 080019 | — | GC ( Neisseria gonorrhoeae ) Culture Only (008128) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .Gram Stain 080031 | — | Body Fluid Culture: Aerobic and Anaerobic Bacterial Culture and Gram Stain (183473)<br>Gram Stain (008540) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .Legionella Cult 080271 | — | Legionella Culture and Legionella pneumophila , DFA (188227)<br>Legionella species Culture (086868) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .WBC Stool 080025 | — | White Blood Cells (WBC), Stool (008656) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .Body Fluid Cult 080186 | — | Body Fluid Culture: Aerobic and Anaerobic Bacterial Culture (183474)<br>Body Fluid Culture: Aerobic and Anaerobic Bacterial Culture and Gram Stain (183473)<br>Body Fluid Culture, Sterile, Routine (180802) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .MIC 1 Drug 080647 | — | Minimum Inhibitory Concentration (MIC), One Drug (096388) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| .O and P 080013 | — | Ova and Parasites Examination (008623) | REFLEX ADD-ON, do not order. Labcorp adds it automatically from the parent test listed. |
+| 80047 Chem 8 POC | — | — | Point-of-care (bedside) test, not sent to Labcorp. The 5-digit number is its billing (CPT) code. |
+| 80061 Lipid Panel POC | — | — | Point-of-care (bedside) test, not sent to Labcorp. The 5-digit number is its billing (CPT) code. |
+| 80305 Urine Drug Screen POC | — | — | Point-of-care (bedside) test, not sent to Labcorp. The 5-digit number is its billing (CPT) code. |
 
 ## Cerner names that match the catalog exactly (62)
 
