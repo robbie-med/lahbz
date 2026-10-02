@@ -1,0 +1,194 @@
+Serum Bactericidal Test
+Serum Drug Alcohol Screen
+Serum HCG
+Serum HCG Level
+Serum Osmolality
+Serum Protein Electrophoresis Analyzer
+AFP, Serum, Open Spina Bifida
+Aldosterone Serum
+Aluminum Serum
+Biotinidase Serum
+Carnitine Serum
+Ciproflaxacin Serum Level
+Copper Serum/Plasma
+Electrophoresis Serum (No Reflex)
+Gold Serum Level
+Imipramine Serum
+Immunofix Serum
+Immunofixation, Serum (M20)
+Insulin Serum
+Iodine Serum
+Isoniazid Serum/Plasma
+Lysozyme Serum
+Microglobulin Serum
+Muramidase Serum
+Myoglobin Serum
+Nicotine Serum Quantitative
+Osmolality Serum
+Perampanel, Serum/Plasma
+Potassium Serum/Plasma
+Preg Serum Qual
+Quantitative serum HCG
+Salicylate-Serum Level
+Thallium, Serum/Plasma
+Thiocyante Serum Level
+Zinc Serum
+.Immunofixation Reflex, Serum 001496
+Alkaline Phosphatase, Serum
+Bordetella Pertussis Serum Antibody
+C3 Complement Serum
+C4 Complement Serum
+C5 Complement Serum
+C7 Complement Serum
+Cholesterol Total Serum
+Ciprofloxacin Quant Serum Level
+Cortisol Free Serum
+Cryptococcus Antigen Serum Scr
+HCG Qualitative Serum
+IgA Subclasses Serum
+Methadone (Dolophine), Serum
+Mycophenolic Level Serum
+Pregabalin (Lyrica) Serum
+.Cryptococcus Ag Titer, Serum 183036
+.DPPX Antibody, Titer, Serum 505282
+1,5 Anhydroglucitol Quant, Serum/Plasma
+Aspergillus Ag, BAL/Serum
+Beta 2 Microglobulin Serum
+Beta HCG Qual Serum Preg Test
+Enterovirus DNA PCR Serum
+Luteinizing Hormone (LH) Serum
+.Anti-LGI1 Antibody Titer,Serum 505357
+.Anti-MOG Antibody Titer, Serum 505312
+.hCG,Beta Subunit,Qnt,Serum 004613
+Fatty Acid Profile Essential Serum
+Oligoclonal Bands CSF and Serum
+.Reflex Anti-LGI1 Ab Titer,Serum
+14-3-3 eta Protein Serum
+Anti-Myelin Oligodendrocyte Glycoprotein (MOG), Serum
+HSV 1/2 PCR Qualitative Plasma/Serum
+Anti-Leucine-Rich, Glioma-Inactivated Protein 1 (LGI1), Serum
+AB Titer
+.APCA+IF Ab 010423
+ACTIN AB
+CARDIO AB
+CCP AB
+Centrom AB
+CHLAM AB
+Citruln AB
+CMV Ab IgG
+Coccidioides Ab
+Coccidioides Ab Reflexive Panel
+Cysticercosis Ab IgG CSF
+Cytoker AB
+EBV Ab Panel
+ECHOVI AB
+GBM AB
+GIARDIA AB
+GRANMB AB
+HEPARIN AB
+HISTONE AB
+Histoplasma Ab
+HRANA AB
+HSV1 Ab IgG
+HSV2 Ab IgG
+INSULIN AB
+JCV Ab Stratify with Index and Reflex to Inhibition Assay
+LKM AB
+Mitoch AB Titer
+MYCOPLA AB
+Myeloperoxidase Ab
+NEURONL AB
+NEUTRO AB
+NMO AB
+NONTREP AB
+PHOS AB
+PHOSLIP AB
+Pneumococcal Ab Panel PCV15, 15-Seroty
+Pneumococcal Ab Panel PCV20, 20-Seroty
+Pneumococcal Ab Panel PCV21, 21-Seroty
+Pneumococcal Ab Panel PPSV23, 23-Seroty
+Rubella Ab IgG IgM
+Schistosoma Ab IgG
+Sclero AB
+Smith Ab
+SPERM AB
+Sporothrix Ab
+SPRUE AB
+STRIAT AB
+THYRO AB
+Toxo Ab IgG
+Toxo Ab IgG IgM
+VZV Ab IgG
+ABG
+ABG w/Base Excess
+ABORH
+ABPA 2
+ABSC
+Absolute Eosinophil Count
+.Coccidioides immitis Ab, by ID 830946
+Blastomyces dermatitidis Ab w/ Reflex
+BOR PER AB
+Doublestranded DNA AB
+E CHAFF AB
+EBV EA Ab IgG
+EBV VCA Ab IgG IgM
+GM1 Ganglioside AB
+H PYLORI Ab IgG
+Hepatitis A Ab IgG
+Hepatitis A Ab IgM
+Hepatitis C Ab
+Hepatitis E Ab IgG IgM
+Hepatitis E Ab IgM
+HIV Ag/Ab Screen
+Int Bl Ab
+JO-1 AB
+LIV KID AB
+MUR TYP AB
+Neuronal Nuclear Ab Hu Ri Yo IgG
+NEUT CY AB
+Phos PN Ab
+Proteinase 3 Ab
+SCL 70 AB
+Streptolysin O AB Titer
+Thyroid Stimulating Ab
+Toxocara IgG Ab
+TSH REC AB
+West Nile Ab
+.Blastomyces Abs, Qn, DID
+ACHR ABS
+CEA ABB
+NuSwab BV and Candida, NAA
+NuSwab BV+Candida 6sp
+NuSwab Vaginitis (VG)
+NuSwab Vaginitis Plus (VG+)
+NuSwab VG Plus+Mycopl+Genita
+NuSwab VG Plus+Mycoplasmas,NAA
+NuSwab VG, Candida 6sp
+NuSwab VG, HSV
+NuSwab VG+, Candida 6sp
+NuSwab VG+, HSV
+NuSwab VG+Mycoplasmas, NAA
+5-Nucleotidase
+A NUTS PNL
+COVID-19 IgG, Nucleocapsid
+Norovirus Groups 1,2 PCR
+Nuts Allergy Panel IgE
+SARS-CoV-2 IgG, Nucleocapsid
+VAG MOLEC
+VAG PROF
+G VAG CUL
+Trich vag by NAA
+Vaginal Profile From Swab
+Vaginosis Profile + STD Swab
+Vaginosis Profile + Trichomonas Swab
+Vaginosis Profile MySwab
+Vaginosis Profile Saline Wet Mount
+Bacterial Vaginosis Swab
+Bacterial Vaginosis, NAA
+Candida Vaginitis Swab
+MySwab Vaginosis Profile
+MySwab Vaginosis Profile + STD
+MySwab Vaginosis Profile + Trichomonas
+Candida and Trichomonas Vaginitis Swab
+HPV, Self-Collect, Vaginal Swab
+Ferritin Level (FERRITIN)
