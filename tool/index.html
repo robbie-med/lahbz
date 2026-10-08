@@ -1,0 +1,492 @@
+<title>Lab Order Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one narrow working column; search pinned on top, answers as stacked order slips. */
+:root {
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --ink: #17212b;
+  --muted: #5a6876;
+  --line: #d9e0e7;
+  --accent: #245b8f;
+  --accent-ink: #ffffff;
+  --accent-soft: #e5eef7;
+  --here: #17663f;   --here-bg: #e3f3ea;
+  --check: #8a5a00;  --check-bg: #fbf0d9;
+  --send: #a8261b;   --send-bg: #fbe5e2;
+  --font: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f151b; --panel: #17202a; --ink: #e6edf3; --muted: #9aa8b6; --line: #2a3643;
+    --accent: #7fb2e5; --accent-ink: #0f151b; --accent-soft: #1d2e40;
+    --here: #6fd39c; --here-bg: #12301f; --check: #f0c065; --check-bg: #33270c; --send: #f3958b; --send-bg: #3a1714;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f151b; --panel: #17202a; --ink: #e6edf3; --muted: #9aa8b6; --line: #2a3643;
+  --accent: #7fb2e5; --accent-ink: #0f151b; --accent-soft: #1d2e40;
+  --here: #6fd39c; --here-bg: #12301f; --check: #f0c065; --check-bg: #33270c; --send: #f3958b; --send-bg: #3a1714;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.45; margin: 0; }
+.wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 0 48px; }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 14px 10px; border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.brand h1 { font-size: 1.25rem; margin: 0; letter-spacing: .01em; }
+.brand .sub { color: var(--muted); font-size: .9rem; }
+.searchrow { display: flex; gap: 8px; }
+#q { flex: 1; min-width: 0; font: inherit; font-size: 1.1rem; padding: 12px 14px; border-radius: var(--r); border: 2px solid var(--line); background: var(--panel); color: var(--ink); }
+#q:focus { outline: none; border-color: var(--accent); }
+#clear { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--muted); border-radius: var(--r); padding: 0 14px; cursor: pointer; }
+nav.tabs { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+nav.tabs button { font: inherit; font-size: .92rem; border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+nav.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.legend { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; font-size: .85rem; color: var(--muted); align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: .85rem; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pill.here { color: var(--here); background: var(--here-bg); }
+.pill.check { color: var(--check); background: var(--check-bg); }
+.pill.send { color: var(--send); background: var(--send-bg); }
+main { padding-top: 14px; }
+.status-line { color: var(--muted); font-size: .9rem; margin: 4px 0 12px; }
+.examples { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 18px; }
+.chip { font: inherit; font-size: .9rem; border: 1px solid var(--line); background: var(--panel); color: var(--accent); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.list { display: grid; gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; min-width: 0; }
+.card h3 { margin: 0; font-size: 1.05rem; text-wrap: balance; }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; color: var(--muted); font-size: .82rem; }
+.meta .code { font-family: var(--mono); font-size: .8rem; }
+.grid { display: grid; grid-template-columns: 9.5em 1fr; gap: 8px 14px; margin-top: 12px; align-items: start; }
+.grid > .k { color: var(--muted); font-size: .85rem; padding-top: 2px; }
+.grid > .v { min-width: 0; }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; gap: 2px; } .grid > .v { margin-bottom: 8px; } }
+.cerner b { font-weight: 700; }
+.mono { font-family: var(--mono); font-size: .92rem; }
+.misc { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.copy { font: inherit; font-size: .8rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+.why { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.tag { font-size: .8rem; border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px; color: var(--ink); background: var(--bg); }
+.tube { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,.25); margin-right: 6px; vertical-align: -1px; }
+.banner { margin-top: 10px; padding: 8px 12px; border-radius: 8px; font-size: .92rem; }
+.banner.dead { background: var(--send-bg); color: var(--ink); border-left: 4px solid var(--send); }
+.banner.warn { background: var(--check-bg); color: var(--ink); border-left: 4px solid var(--check); }
+.banner.note { background: var(--accent-soft); color: var(--ink); border-left: 4px solid var(--accent); }
+.linkbtn { font: inherit; background: none; border: 0; color: var(--accent); text-decoration: underline; cursor: pointer; padding: 0; }
+details { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+summary { cursor: pointer; color: var(--accent); font-size: .92rem; }
+.prose { white-space: pre-line; font-size: .92rem; overflow-wrap: anywhere; }
+.small { font-size: .85rem; color: var(--muted); }
+a { color: var(--accent); }
+.more { margin-top: 14px; }
+.tree { display: grid; gap: 10px; }
+.sys { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 16px; }
+.sys h3 { margin: 0 0 6px; font-size: 1rem; }
+.cond { display: grid; grid-template-columns: 13em 1fr; gap: 6px 12px; padding: 6px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.cond:first-of-type { border-top: 0; }
+.cond .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+@media (max-width: 560px) { .cond { grid-template-columns: 1fr; } }
+.about { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; }
+.about h2 { font-size: 1.05rem; margin: 18px 0 6px; }
+.about h2:first-child { margin-top: 0; }
+.about p, .about li { max-width: 68ch; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: .9rem; }
+td, th { border-bottom: 1px solid var(--line); padding: 5px 10px 5px 0; text-align: left; vertical-align: top; }
+.loading { color: var(--muted); padding: 20px 0; }
+@media (prefers-reduced-motion: no-preference) { .card { transition: border-color .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Lab Order Finder</h1>
+      <span class="sub">What to order in Cerner, and whether it's drawn here</span>
+    </div>
+    <div class="searchrow">
+      <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Type a test in plain words: thyroid, iron, BV, lead…" aria-label="Search for a lab test">
+      <button id="clear" type="button" aria-label="Clear search">Clear</button>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-search" aria-selected="true">Results</button>
+      <button type="button" role="tab" id="tab-browse" aria-selected="false">Browse by system</button>
+      <button type="button" role="tab" id="tab-about" aria-selected="false">How it works</button>
+    </nav>
+    <div class="legend" aria-label="Legend">
+      <span class="pill here">Draw here</span>
+      <span class="pill check">Check with lab tech</span>
+      <span class="pill send">Send to Labcorp PSC</span>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-search">
+      <p class="status-line" id="status">Loading the test catalog…</p>
+      <div class="examples" id="examples"></div>
+      <div class="list" id="results"></div>
+      <div class="more" id="more"></div>
+    </section>
+    <section id="view-browse" hidden>
+      <p class="status-line">Common orders grouped by system. Tap a test to see what to order. This is a shortcut list, not clinical guidance.</p>
+      <div class="tree" id="tree"></div>
+    </section>
+    <section id="view-about" hidden>
+      <div class="about" id="about"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = null, TESTS = [], BYKEY = {}, HAY = [], ALIAS = {}, CAN = {}, LOCALNAMES = {};
+  var PAGE = 25, shown = PAGE, lastHits = [];
+
+  // ---------- tiny DOM helper (text only, never innerHTML with data)
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "class") el.className = attrs[k];
+      else if (k === "text") el.textContent = attrs[k];
+      else if (k === "style") el.style.cssText = attrs[k];
+      else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), attrs[k]);
+      else el.setAttribute(k, attrs[k]);
+    }
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null || c === false) continue;
+      if (Array.isArray(c)) c.forEach(function (x) { if (x != null && x !== false) el.appendChild(typeof x === "string" ? document.createTextNode(x) : x); });
+      else el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return el;
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var norm = function (s) { return (s || "").toLowerCase().replace(/[®™]/g, "").replace(/[^a-z0-9.+/&()-]+/g, " ").trim(); };
+
+  // ---------- tabs
+  var tabs = { search: $("tab-search"), browse: $("tab-browse"), about: $("tab-about") };
+  function show(name) {
+    Object.keys(tabs).forEach(function (k) {
+      tabs[k].setAttribute("aria-selected", k === name ? "true" : "false");
+      $("view-" + k).hidden = k !== name;
+    });
+    try { localStorage.setItem("lof-tab", name); } catch (e) {}
+  }
+  Object.keys(tabs).forEach(function (k) { tabs[k].addEventListener("click", function () { show(k); }); });
+
+  // ---------- status (draw here / check / send)
+  var FLAG_LABEL = {
+    frozen: "Must be frozen", ice: "On ice", warm: "Keep at body temp (37°C)", light: "Protect from light",
+    spin: "Spin / separate", fast: "Fasting", timed: "Timed / morning draw", u24: "24-hour urine",
+    kit: "Special tube or kit"
+  };
+  function statusOf(e) {
+    var fl = e.fl || {}, send = [], check = [], info = [];
+    if (e.no) send.push("On the clinic's can't-draw-here list (" + e.no + ")");
+    function cap(flag, capName, label) {
+      if (!fl[flag]) return;
+      if (CAN[capName] === true) info.push(label + ": clinic can do this");
+      else if (CAN[capName] === false) send.push(label + ": clinic can't do this");
+      else check.push(label);
+    }
+    cap("frozen", "freezer", "Must be frozen");
+    cap("ice", "ice", "On ice");
+    cap("warm", "warm", "Keep at 37°C");
+    if (fl.mins != null && fl.mins <= 120) {
+      if (CAN.courier_minutes != null && CAN.centrifuge === true) info.push("Process within " + fl.mins + " min");
+      else check.push("Process within " + fl.mins + " min");
+    }
+    if (fl.kit) check.push("Special tube or kit");
+    if (fl.spin && CAN.centrifuge === false) send.push("Needs spinning: clinic has no centrifuge");
+    if (e.dead) return { level: "send", label: "Not orderable", reasons: [e.dead], info: [] };
+    var level = send.length ? "send" : check.length ? "check" : "here";
+    return { level: level, reasons: send.length ? send : check, info: info };
+  }
+
+  // ---------- Cerner instruction
+  function cernerBlock(e) {
+    var v = h("div", { class: "cerner" });
+    if (e.cer && e.cer.length) {
+      v.appendChild(h("div", null, "Seen in Cerner as ", e.cer.map(function (n, i) { return [i ? " or " : "", h("b", { text: n })]; }).flat()));
+      return v;
+    }
+    if (e.src === "L") {
+      v.appendChild(h("div", null, "Search Cerner for ", h("b", { text: e.name }),
+        e.code ? h("span", { class: "small" }, " (short name ", h("span", { class: "mono", text: e.code }), ")") : null));
+      if (e.nat) v.appendChild(h("div", { class: "small" }, "Not there? Order ", miscLine(e.nat)));
+      else v.appendChild(h("div", { class: "small", text: "Not there? Ask the lab. (Local test with no Labcorp national number.)" }));
+      return v;
+    }
+    v.appendChild(h("div", null, "Order ", miscLine(e.nat)));
+    return v;
+  }
+  function miscLine(code) {
+    var btn = h("button", { class: "copy", type: "button", text: "Copy number" });
+    btn.addEventListener("click", function () {
+      var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy number"; }, 1500); };
+      try { navigator.clipboard.writeText(code).then(done, function () { selectText(num); }); } catch (err) { selectText(num); }
+    });
+    var num = h("span", { class: "mono", text: code });
+    return h("span", { class: "misc" }, h("b", { text: "Miscellaneous Test" }), " with Labcorp # ", num, btn);
+  }
+  function selectText(el) { try { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {} }
+
+  // ---------- tube colour from container text
+  var TUBES = [
+    [/lavender|purple|edta/i, "#8e6bbf", "Lavender"], [/light[- ]blue|citrate/i, "#7fb7e6", "Light blue"],
+    [/gray|grey|fluoride/i, "#9aa0a6", "Gray"], [/royal[- ]blue/i, "#2747a8", "Royal blue"],
+    [/tan[- ]top|tan /i, "#c9a77c", "Tan"], [/pink/i, "#e79ab8", "Pink"], [/yellow|acd/i, "#e7cf3b", "Yellow"],
+    [/green|heparin|pst/i, "#3f9b5b", "Green"], [/gold|sst|gel[- ]barrier|clot activator/i, "#d4a531", "Gold / SST"],
+    [/red[- ]top|red no-gel|plain red/i, "#c8372d", "Red"], [/aptima/i, "#e98a2b", "Aptima swab"]
+  ];
+  function tubeOf(text) {
+    for (var i = 0; i < TUBES.length; i++) if (TUBES[i][0].test(text || "")) return TUBES[i];
+    return null;
+  }
+
+  // ---------- one result card
+  function card(e) {
+    var st = statusOf(e);
+    var n = e.n || {};
+    var where = e.src === "N" ? "Labcorp national" : (e.nat ? "Local catalog \u00b7 sent to Labcorp national" : "Local catalog \u00b7 run at local Labcorp lab");
+    var c = h("article", { class: "card" });
+    c.appendChild(h("h3", { text: e.name }));
+    c.appendChild(h("div", { class: "meta" },
+      h("span", { text: where }),
+      e.num ? h("span", { class: "code", text: "Local #" + e.num }) : null,
+      e.nat ? h("span", { class: "code", text: "Labcorp #" + e.nat }) : null
+    ));
+    if (e.dead) {
+      var b = h("div", { class: "banner dead" }, h("b", { text: "Don't order this. " }), e.dead + " ");
+      if (e.use_instead && e.use_instead.length) {
+        b.appendChild(document.createTextNode("Use instead: "));
+        e.use_instead.forEach(function (k, i) {
+          var t = BYKEY[k]; if (!t) return;
+          if (i) b.appendChild(document.createTextNode(", "));
+          b.appendChild(h("button", { class: "linkbtn", type: "button", text: t.name, onclick: function () { runQuery(t.name, [k]); } }));
+        });
+      }
+      c.appendChild(b);
+    }
+    var g = h("div", { class: "grid" });
+    g.appendChild(h("div", { class: "k", text: "In Cerner" }));
+    g.appendChild(h("div", { class: "v" }, cernerBlock(e)));
+    g.appendChild(h("div", { class: "k", text: "Where to draw" }));
+    var sv = h("div", { class: "v" }, h("span", { class: "pill " + st.level, text: st.label || (st.level === "here" ? "Draw here" : st.level === "check" ? "Check with lab tech" : "Send to Labcorp PSC") }));
+    if (st.reasons.length) sv.appendChild(h("div", { class: "small", text: st.reasons.join(" \u00b7 ") }));
+    else sv.appendChild(h("div", { class: "small", text: "No special handling found in the lab's requirements." }));
+    if (e.non) sv.appendChild(h("div", { class: "small", text: e.non }));
+    g.appendChild(sv);
+
+    var spec = n.spec || e.spec || "";
+    var cont = n.cont || "";
+    var tube = tubeOf(cont + " " + spec);
+    g.appendChild(h("div", { class: "k", text: "Specimen" }));
+    var specV = h("div", { class: "v" },
+      h("div", null, tube ? h("span", { class: "tube", style: "background:" + tube[1], title: tube[2] + " top", "aria-hidden": "true" }) : null,
+        spec || "See details", n.vol ? " \u00b7 " + n.vol : ""));
+    if (cont) specV.appendChild(h("div", { class: "small prose", text: cont }));
+    if (e.alt && e.alt.length) specV.appendChild(h("div", { class: "small", text: "Also accepted: " + e.alt.join("; ") }));
+    var tags = [];
+    var fl = e.fl || {};
+    Object.keys(FLAG_LABEL).forEach(function (f) { if (fl[f]) tags.push(h("span", { class: "tag", text: FLAG_LABEL[f] })); });
+    if (fl.mins != null) tags.push(h("span", { class: "tag", text: "Within " + fl.mins + " min" }));
+    if (tags.length) specV.appendChild(h("div", { class: "why" }, tags));
+    g.appendChild(specV);
+    c.appendChild(g);
+
+    if (e.src === "N" && LOCALNAMES[norm(e.name)]) c.appendChild(h("div", { class: "banner note", text: "There's also a local version of this test (search the same name). Order the local one unless you specifically need Labcorp national." }));
+    if (e.warn) c.appendChild(h("div", { class: "banner warn", text: e.warn }));
+    if (e.note) c.appendChild(h("div", { class: "banner note", text: e.note }));
+
+    var d = h("details");
+    d.appendChild(h("summary", { text: "Collection details, stability, turnaround" }));
+    var body = h("div", { class: "grid" });
+    function row(k, v) { if (!v) return; body.appendChild(h("div", { class: "k", text: k })); body.appendChild(h("div", { class: "v prose", text: v })); }
+    row("Patient prep", n.prep);
+    row("Collection", n.col || e.col);
+    if (n.col && e.col && n.col !== e.col) row("Old local instructions", e.col);
+    row("Storage", n.stor);
+    row("Stability", n.stab);
+    row("Turnaround", n.tat || e.tat);
+    row("Includes", (e.inc || []).join(", "));
+    row("Clinical use", e.use);
+    row("CPT", e.cpt);
+    var links = h("div", { class: "v" });
+    if (n.nurl) links.appendChild(h("div", null, h("a", { href: n.nurl, target: "_blank", rel: "noopener", text: "Labcorp test page" })));
+    if (e.url) links.appendChild(h("div", null, h("a", { href: e.url, target: "_blank", rel: "noopener", text: "Old RML catalog page (may go offline)" })));
+    if (links.childNodes.length) { body.appendChild(h("div", { class: "k", text: "Sources" })); body.appendChild(links); }
+    d.appendChild(body);
+    c.appendChild(d);
+    return c;
+  }
+
+  // ---------- search
+  function aliasFor(q) {
+    if (ALIAS[q]) return ALIAS[q];
+    return null;
+  }
+  var STOP = { level: 1, levels: 1, test: 1, tests: 1, lab: 1, labs: 1, check: 1, order: 1, the: 1, a: 1, for: 1, of: 1, blood: 0 };
+  function search(q) {
+    var nq = norm(q).split(" ").filter(function (w) { return !STOP[w]; }).join(" ");
+    if (!nq) nq = norm(q);
+    if (!nq) return [];
+    var toks = nq.split(" ").filter(Boolean);
+    var first = aliasFor(nq) || [];
+    var firstSet = {};
+    first.forEach(function (k, i) { firstSet[k] = i; });
+    var scored = [];
+    for (var i = 0; i < TESTS.length; i++) {
+      var e = TESTS[i], hay = HAY[i];
+      if (e.k in firstSet) continue;
+      var ok = true, s = 0;
+      for (var t = 0; t < toks.length; t++) {
+        var tok = toks[t];
+        var at = hay.name.indexOf(tok);
+        var wordStart = at === 0 || (at > 0 && /[^a-z0-9]/.test(hay.name.charAt(at - 1)));
+        if (at >= 0) s += wordStart ? 10 : 4;
+        else if (hay.other.indexOf(tok) >= 0) s += 2;
+        else { ok = false; break; }
+      }
+      if (!ok) continue;
+      if (hay.name === nq) s += 40;
+      else if (hay.name.indexOf(nq) === 0) s += 15;
+      if (e.cer) s += 8;
+      if (e.src === "L") s += 6;
+      if (e.dead) s -= 6;
+      if (/specimens\b/i.test(e.name)) s -= 8;
+      s -= Math.min(hay.name.length, 120) / 30;
+      scored.push([s, e]);
+    }
+    scored.sort(function (a, b) { return b[0] - a[0]; });
+    var out = first.map(function (k) { return BYKEY[k]; }).filter(Boolean);
+    return out.concat(scored.map(function (x) { return x[1]; }));
+  }
+
+  function render() {
+    var res = $("results"); res.textContent = "";
+    var more = $("more"); more.textContent = "";
+    var q = $("q").value;
+    if (!norm(q)) {
+      $("status").textContent = TESTS.length.toLocaleString() + " tests loaded. Type what you want to order, or browse by system.";
+      $("examples").hidden = false;
+      return;
+    }
+    $("examples").hidden = true;
+    var n = lastHits.length;
+    $("status").textContent = n ? (n === 1 ? "1 match" : n.toLocaleString() + " matches") + (n > shown ? ", showing the top " + shown : "") + "." : "No matches. Try fewer or different words, or browse by system.";
+    lastHits.slice(0, shown).forEach(function (e) { res.appendChild(card(e)); });
+    if (n > shown) more.appendChild(h("button", { class: "chip", type: "button", text: "Show more", onclick: function () { shown += PAGE; render(); } }));
+  }
+
+  var timer = null;
+  function runQuery(text, keysFirst) {
+    $("q").value = text;
+    shown = PAGE;
+    lastHits = search(text);
+    if (keysFirst) {
+      var top = keysFirst.map(function (k) { return BYKEY[k]; }).filter(Boolean);
+      lastHits = top.concat(lastHits.filter(function (e) { return keysFirst.indexOf(e.k) < 0; }));
+    }
+    show("search");
+    render();
+    window.scrollTo(0, 0);
+  }
+  $("q").addEventListener("input", function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { shown = PAGE; lastHits = search($("q").value); show("search"); render(); }, 120);
+  });
+  $("clear").addEventListener("click", function () { $("q").value = ""; lastHits = []; render(); $("q").focus(); });
+
+  // ---------- browse tree
+  function buildTree() {
+    var t = $("tree");
+    DATA.tree.forEach(function (sys) {
+      var box = h("section", { class: "sys" }, h("h3", { text: sys[0] }));
+      sys[1].forEach(function (cond) {
+        var chips = h("div", { class: "chips" });
+        cond[1].forEach(function (term) {
+          var keys = ALIAS[term] || [];
+          var label = keys.length === 1 && BYKEY[keys[0]] ? shortName(BYKEY[keys[0]].name) : term.toUpperCase().length <= 4 ? term.toUpperCase() : term.replace(/^\w/, function (m) { return m.toUpperCase(); });
+          chips.appendChild(h("button", { class: "chip", type: "button", text: label, onclick: function () { runQuery(term, keys); } }));
+        });
+        box.appendChild(h("div", { class: "cond" }, h("div", { text: cond[0] }), chips));
+      });
+      t.appendChild(box);
+    });
+  }
+  function shortName(s) { return s.replace(/\s*\((?!TSH|CBC|PSA|ESR|CRP)[^)]*\)/g, "").replace(/\s+-\s+.*$/, "").trim(); }
+
+  // ---------- about
+  function buildAbout() {
+    var a = $("about");
+    var unknown = Object.keys(CAN).filter(function (k) { return CAN[k] == null; });
+    a.appendChild(h("h2", { text: "What this answers" }));
+    a.appendChild(h("p", { text: "For any lab test: what to put into Cerner, whether the clinic can draw it or the patient goes to a Labcorp patient service center (PSC), and what tube and handling it needs." }));
+    a.appendChild(h("h2", { text: "What to put into Cerner" }));
+    a.appendChild(h("ul", null,
+      h("li", { text: "\"Seen in Cerner as\": a Cerner name confirmed from our own Cerner screenshots." }),
+      h("li", { text: "\"Search Cerner for\": the test's name in the local catalog. Most local tests are built in Cerner under this name or a close variant. Search by words; Cerner can't search by test number." }),
+      h("li", { text: "\"Miscellaneous Test with Labcorp #\": for anything not built in Cerner, order Miscellaneous Test and give the Labcorp national number." }),
+      h("li", { text: "Cerner entries that start with \".\" (like \".THC,MS,WB/SP RFX 700817\") are reflex steps Labcorp adds on its own. Don't order them." })
+    ));
+    a.appendChild(h("h2", { text: "How \"where to draw\" is decided" }));
+    a.appendChild(h("ul", null,
+      h("li", null, h("b", { text: "Send to Labcorp PSC: " }), "the test is on the clinic's can't-draw-here list, or it needs something the clinic has said it can't do."),
+      h("li", null, h("b", { text: "Check with lab tech: " }), "the lab's requirements call for freezing, ice, body temperature, a special tube or kit, or processing within 2 hours, and we haven't recorded yet whether the clinic can do that."),
+      h("li", null, h("b", { text: "Draw here: " }), "nothing special found in the lab's specimen requirements. The lab tech still has the final say.")
+    ));
+    if (unknown.length) a.appendChild(h("p", { class: "small", text: "Not yet recorded for this clinic: " + unknown.map(function (k) { return { centrifuge: "centrifuge", freezer: "specimen freezer", ice: "ice for on-ice draws", warm: "37°C warming", courier_minutes: "courier pickup times" }[k] || k; }).join(", ") + ". Once the lab tech answers, many \"Check with lab tech\" results will become \"Draw here\" or \"Send to Labcorp PSC\"." }));
+    a.appendChild(h("h2", { text: "Clinic's can't-draw-here list" }));
+    var tb = h("tbody");
+    DATA.no.forEach(function (r) { tb.appendChild(h("tr", null, h("td", { text: r[0] }), h("td", { class: "small", text: r[1] || "" }))); });
+    a.appendChild(h("div", { class: "tablewrap" }, h("table", null, tb)));
+    a.appendChild(h("h2", { text: "Sources" }));
+    a.appendChild(h("ul", null, Object.keys(DATA.sources).map(function (k) { return h("li", { text: DATA.sources[k] }); })));
+    a.appendChild(h("p", { class: "small", text: "Built " + DATA.built + ". Test details are copied from the lab catalogs; check the linked Labcorp page when something matters. The old RML catalog site posted a shutdown notice, so its links may stop working." }));
+  }
+
+  // ---------- examples at rest
+  function buildExamples() {
+    var ex = $("examples");
+    ex.appendChild(h("span", { class: "small", text: "Try:" }));
+    ["thyroid", "iron", "vaginitis", "lactate", "vitamin d", "lead", "hep c", "a1c"].forEach(function (t) {
+      ex.appendChild(h("button", { class: "chip", type: "button", text: t, onclick: function () { runQuery(t, ALIAS[t]); } }));
+    });
+  }
+
+  // ---------- load
+  fetch("data.json").then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  }).then(function (d) {
+    DATA = d; TESTS = d.tests; CAN = d.can || {};
+    TESTS.forEach(function (e) {
+      BYKEY[e.k] = e;
+      if (e.src === "L") LOCALNAMES[norm(e.name)] = 1;
+      HAY.push({
+        name: norm(e.name),
+        other: norm([e.code, e.num, e.nat, (e.cer || []).join(" "), (e.inc || []).join(" ")].join(" "))
+      });
+    });
+    d.aliases.forEach(function (a) { a[0].forEach(function (t) { ALIAS[norm(t)] = a[1]; }); });
+    buildExamples(); buildTree(); buildAbout();
+    var tab = "search";
+    try { tab = localStorage.getItem("lof-tab") || "search"; } catch (e) {}
+    show(tab === "about" ? "about" : tab === "browse" ? "browse" : "search");
+    render();
+  }).catch(function (err) {
+    $("status").textContent = "Couldn't load the test catalog (" + err.message + "). Reload the page to try again.";
+  });
+})();
+</script>
