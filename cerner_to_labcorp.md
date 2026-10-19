@@ -231,3 +231,34 @@ Built 2026-10-02 from the Cerner search screenshots. Sources: the old RML / Labc
 | G VAG CUL | Gardnerella Culture — order code `G VAG CUL`, #6002075 | — |  |
 | Bacterial Vaginosis, NAA | Bacterial Vaginosis, NAA — order code `Bact Vag NAA`, #5195322 | Bacterial Vaginosis, NAA (180060) |  |
 | Candida and Trichomonas Vaginitis Swab | Candida and Trichomonas Vaginitis Swab — order code `CV-TV Swab`, #6987019 | — |  |
+
+## Cerner thyroid orders (from a Cerner order list screenshot, 2026-10-19)
+
+Several lines are the same order shown under a different synonym: "Name (Synonym)".
+
+| Cerner name | Old RML / Labcorp Oklahoma name | Labcorp national name (code) | Notes |
+|---|---|---|---|
+| Free T3 (T3 Free) | Triiodothyronine (T3), Free — order code `T3 FREE`, #3606325 | — |  |
+| Free T3 | Triiodothyronine (T3), Free — order code `T3 FREE`, #3606325 | — |  |
+| T3 Total | Triiodothyronine (T3), Total — order code `T3 TOT`, #4502600 | — |  |
+| T3 Total (Total T3) | Triiodothyronine (T3), Total — order code `T3 TOT`, #4502600 | — |  |
+| T3 Total (T3 TOT) | Triiodothyronine (T3), Total — order code `T3 TOT`, #4502600 | — |  |
+| TSH | Thyroid Stimulating Hormone (TSH) — order code `TSH`, #4501925 | — |  |
+| TSH (Thyroid Stimulating Hormone) | Thyroid Stimulating Hormone (TSH) — order code `TSH`, #4501925 | — |  |
+| Thyroid Analyzer (TSH Analyzer) | Thyroid Analyzer — order code `THYROID AN`, #4502350 | — | Reported not orderable. |
+| Thyroid Analyzer (THYROID AN) | Thyroid Analyzer — order code `THYROID AN`, #4502350 | — | Reported not orderable. |
+| Reverse T3 | T3 (Triiodothyronine) Reverse — order code `REVERSE T3`, #2010900 | T3, Reverse (070104) |  |
+| Reverse T3 (T3 Reverse Level) | T3 (Triiodothyronine) Reverse — order code `REVERSE T3`, #2010900 | T3, Reverse (070104) |  |
+| .Thyroxine (T4) Free, Direct, S 001976 | — | Thyroid Cascade Profile (330015) | REFLEX ADD-ON, do not order. Free T4 step of the Thyroid Cascade (low-TSH branch). |
+| .Thyroxine (T4) Free, Direct, S 001977 | — | Thyroid Cascade Profile (330015) | REFLEX ADD-ON, do not order. Free T4 step of the Thyroid Cascade (high-TSH branch). |
+| T4 Neonatal | T4 Neonatal — order code `NEONAT T4`, #4501200 | — |  |
+| T4 Neonatal (Neonatal T4) | T4 Neonatal — order code `NEONAT T4`, #4501200 | — |  |
+| T4 Neonatal (NEONAT T4) | T4 Neonatal — order code `NEONAT T4`, #4501200 | — |  |
+| Thyroxine (T4) | Thyroxine (T4) — order code `T4`, #4502650 | — | Total T4, not free T4. |
+| Thyroxine (T4 (Thyroxine)) | Thyroxine (T4) — order code `T4`, #4502650 | — | Total T4, not free T4. |
+| Free T4 | Thyroxine (T4), Free — order code `FREE T4`, #4502550 | — |  |
+| Free T4 (T4 Free) | Thyroxine (T4), Free — order code `FREE T4`, #4502550 | — |  |
+| Thyroid Peroxidase Antibody | Thyroid Peroxidase Antibody (TPO Ab, Microsomal Ab) — order code `THYRO PERX`, #3612430 | — |  |
+| Thyroid Peroxidase Antibody (Thyroid Peroxidase Antibody (TPO Ab, Microsomal Ab)) | Thyroid Peroxidase Antibody (TPO Ab, Microsomal Ab) — order code `THYRO PERX`, #3612430 | — |  |
+| T4 Free By Direct Dialysis | T4, Free, Direct Dialysis — order code `T4 FREE DD`, #3653475 | Thyroxine (T4), Free, Direct Dialysis (501902) |  |
+| THYRO AB (Thyroid Antibody Group (Thyrogobulin autoantibody and TPO ab)) | Thyroid Antibody Panel — order code `THYRO AB`, #3612580 | — |  |
