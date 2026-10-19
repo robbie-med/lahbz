@@ -393,7 +393,7 @@ for num, a in local_by_num.items():
         "col": clean(ins, 1200), "tat": g.get("Expected TAT", ""), "cpt": g.get("CPT Code(s)", "").replace("\n", " "),
         "use": clean(g.get("Clinical Use", ""), 300),
         "inc": [c[0] for c in a.get("comp", [])][:20],
-        "url": a.get("url", ""),
+        "url": None,  # the RML directory site is defunct; links no longer work
     }
     transport = (pref[-1] if pref else "")
     spec_for_flags = " ".join(pref[1:-1]) + " " + ("frozen" if re.fullmatch(r"(?i)frozen.*", transport) else "")
@@ -522,7 +522,7 @@ for e in order:
 out = {
     "built": "2026-10-08",
     "sources": {
-        "local": "RML / Labcorp Oklahoma test directory (rml.labcatalog.net), saved 2026-10-02",
+        "local": "Former RML / Labcorp Oklahoma test directory (defunct; legacy data saved 2026-10-02)",
         "national": "Labcorp national test menu (labcorp.com/tests), saved 2026-10-02",
         "clinic": "Clinic \"labs that can not be drawn here\" list, 2026-09-24",
     },
